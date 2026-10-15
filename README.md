@@ -80,7 +80,7 @@ RMSE is in annualized volatility units (0.0742 means about 7.4 percentage points
 
 ```bash
 pip install pandas numpy scikit-learn yfinance
-python Code_mine.py
+python Code.py
 ```
 
 The first run downloads the data and saves it to `market_data.csv` next to the script, which ends on 9 October 2026. To reproduce the numbers above, use that same file: a fresh download can differ slightly, because Yahoo Finance adjusts historical prices. The script prints the strategy table and the forecast table.
