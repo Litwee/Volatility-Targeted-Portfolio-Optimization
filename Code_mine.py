@@ -98,9 +98,13 @@ def optimize_variables(df_train, folds):
         for fold in folds:
             model = train_model(df_train, depth, leaf, fold)
             val = df_train[fold["val_start"]:fold["val_end"]]
-            rmse = np.sqrt(((model.predict(val[FEATURES])-val[target])^2).mean())
-            scores.append([fold, depth, leaf, rmse])
-        
+            rmse = np.sqrt(((model.predict(val[FEATURES])-val[target]) ** 2).mean())
+            scores.append([fold["fold_number"], depth, leaf, rmse])
+    df_scores = pd.DataFrame(scores, columns=["fold", "depth", "leaf", "rmse"])
+    mean_rmse = df_scores.groupby(["depth", "leaf"])["rmse"].mean()
+    best_depth, best_leaf = mean_rmse.idxmin()
+    best_rmse = mean_rmse.min()
+    return best_depth, best_leaf, best_rmse, mean_rmse, df_scores
 
 
 
